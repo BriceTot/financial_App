@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Prices</title>
+</head>
+<body>
+    <h1>Stock Prices</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for symbol, latest_price in prices %}
+            <tr>
+                <td>{{ symbol }}</td>
+                <td>{{ latest_price }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

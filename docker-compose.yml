@@ -1,0 +1,37 @@
+version: '3'
+services:
+  #web service is the python app creating the webpage
+  web:
+    # build a new image form the dockerfile in the same directory
+    build: .
+    #link the 5000 port of the host to the 5000 port of the container
+    ports:
+      - "5000:5000"
+    #use financial_network
+    networks:
+      - Financial_network
+    #create a bind mount of symbolList containing all symbols (compagnies) that will be shown on the web page
+    volumes:
+      - type: bind
+        source: ./symbolList.txt
+        target: /code/symbolList.txt
+  
+  #mongodb service is the database containing the stock prices of differents compagnies
+  mongodb:
+    #use a mongo image
+    image: mongo
+    #use financial network
+    networks:
+      - Financial_network
+    #link the financialdb volume to the db in the container
+    volumes:
+      - "financialdb:/data/db"
+
+#create a bridge network to connect the database container to the webapp container
+networks:
+  Financial_network:
+    driver: bridge
+
+#create a volume in order to keep a permanent database of the stock prices
+volumes:
+  financialdb:
