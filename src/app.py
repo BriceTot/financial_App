@@ -4,11 +4,6 @@ from pymongo import MongoClient
 
 app = Flask(__name__)
 
-# Get all symbols (compagnies) that will be shown on the web page
-file1 = open("symbolList.txt","r")
-symbols=file1.read().splitlines()
-file1.close()
-
 # API key and MongoDB connection string
 API_KEY = "EBH16WHORBLPBIUA"
 MONGO_URI = "mongodb://mongodb:27017/"
@@ -24,6 +19,11 @@ collection = db['prices']
 # Define a route to fetch and store the latest stock prices
 @app.route('/update_prices')
 def update_prices():
+
+    # Get all symbols (compagnies) that will be shown on the web page
+    file1 = open("symbolList.txt","r")
+    symbols=file1.read().splitlines()
+    file1.close()
     
     #delete previous registrations of the stock prices
     collection.delete_many({})
